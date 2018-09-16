@@ -11,7 +11,20 @@ export default new Router({
 			path: '/',
 			name: 'Home',
 			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/Home/index.vue')
+			component: () => import(/* webpackChunkName: "about" */ './components/Home/index.vue'),
+			meta: { skipAuth: true }
+		},
+		{
+			path: '/login',
+			name: 'Login',
+			component: () => import(/* webpackChunkName: "about" */ './components/Login/index.vue'),
+			meta: { skipAuth: true }
+		},
+		{
+			path: '/logout',
+			name: 'Logout',
+			component: () => import(/* webpackChunkName: "about" */ './components/Logout/index.vue'),
+			meta: { skipAuth: true }
 		},
 		{
 			path: '/edit',

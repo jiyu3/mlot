@@ -5,10 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+	"lint": "vue-cli-service lint",
+	"stop": "pkill -f glot-client"
   },
   "dependencies": {
+    "@babel/core": "^7.0.1",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "firebase": "^5.5.0",
+    "jquery": "^1.9.1",
     "npm": "^6.4.1",
     "vue": "^2.5.17",
     "vue-i18n": "^8.0.0",
