@@ -13,6 +13,13 @@
 	</div>
 </template>
 
+<script>
+export default {
+	created() {
+	}
+}
+</script>
+
 <style>
 html, div {
 	background: #e1fae1;

@@ -4,7 +4,6 @@
 			<b-col>
 				<div id="auth" v-if="!$store.state.login">
 					<button class="btn btn-success" v-on:click="login('Google')">{{ $t("login.google") }}</button><br><br>
-					<button class="btn btn-success" v-on:click="login('Twitter')">{{ $t("login.twitter") }}</button>
 				</div>
 				<!-- <div id="auth" v-else>
 								<button class="btn btn-success" v-on:click="logout">Logout</button>
