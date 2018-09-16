@@ -12,20 +12,13 @@ export default {
 			let redirect_to = this.$route.query.redirect ? this.$route.query.redirect : this.$store.state.redirect_default
 			firebase.auth().signInWithPopup(provider).then(
 				result => {
-					self.$store.commit("login")
+					self.$store.commit("login", result.user)
 					self.$router.push(redirect_to)
 				},
 				error => {
 					// alert(self.i18n.messages[this.locale].login.error)
 				}
 			)
-		},
-		logout() {
-			let self = this
-			firebase.auth().signOut().then(() => {
-				self.$store.commit("logout")
-				self.$router.push("/")
-			})
 		}
 	}
 }

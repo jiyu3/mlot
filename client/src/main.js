@@ -30,7 +30,7 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
 	let skipAuth = to.matched.some(record => record.meta.skipAuth)
 	firebase.auth().onAuthStateChanged(function (user) {
-		user ? store.commit("login") : store.commit("logout")
+		user ? store.commit("login", user) : store.commit("logout")
 		if (!skipAuth) {
 			if (!user) {
 				next({

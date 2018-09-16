@@ -24,7 +24,6 @@ export default new Router({
 			path: '/logout',
 			name: 'Logout',
 			component: () => import(/* webpackChunkName: "about" */ './components/Logout/index.vue'),
-			meta: { skipAuth: true }
 		},
 		{
 			path: '/edit',
