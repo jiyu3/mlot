@@ -1,11 +1,11 @@
 <template>
 	<div id="app">
 		<header>
-			<router-link class="btn" to="/">Home</router-link>
-			<router-link class="btn" to="/edit">Edit</router-link>
-			<router-link class="btn" to="/lot">Lot</router-link>
-			<router-link class="btn" to="/my">My</router-link>
-			<router-link class="btn" to="/result">Result</router-link>
+			<router-link class="btn" to="/" v-if="!$store.state.login">Home</router-link>
+			<router-link class="btn" to="/edit" v-if="$store.state.login">Edit</router-link>
+			<router-link class="btn" to="/lot" v-if="$store.state.login">Lot</router-link>
+			<router-link class="btn" to="/my" v-if="$store.state.login">My</router-link>
+			<router-link class="btn" to="/result" v-if="$store.state.login">Result</router-link>
 		</header>
 		<router-view/>
 		<footer>
@@ -15,7 +15,28 @@
 
 <script>
 export default {
-	created() {
+	methods: {
+		rpc(table, method, params) {
+			let url = this.$store.getters.db_url + table + "/" + method
+			let data = {
+				jsonrpc: "2.0",
+				method: "login",
+				params: params
+			}
+			return new Promise((resolve, reject) => {
+				this.axios.post(
+					url, data
+				).then(r => {
+					console.log(r) // TODO: delete console.log
+					resolve(r)
+				}).catch(e => {
+					console.log(data, e) // TODO: delete console.log
+					reject(e)
+				})
+			})
+		}
+	},
+	mounted() {
 	}
 }
 </script>
