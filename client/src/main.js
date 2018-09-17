@@ -6,6 +6,10 @@ import i18n from './i18n'
 import router from './router'
 import store from './store'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 import 'bootstrap/dist/css/bootstrap.css'
@@ -30,13 +34,21 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
 	let skipAuth = to.matched.some(record => record.meta.skipAuth)
 	firebase.auth().onAuthStateChanged(function (user) {
-		user ? store.commit("login", user) : store.commit("logout")
+		if (user && !store.state.login) {
+			store.commit("login", user)
+		} else if (!user && store.state.login) {
+			store.commit("logout")
+		}
 		if (!skipAuth) {
 			if (!user) {
-				next({
+				let n = {
 					path: '/',
 					query: { redirect: to.name }
-				})
+				}
+				if (to.name === "Logout") {
+					delete n.query
+				}
+				next(n)
 			} else {
 				next()
 			}
@@ -53,8 +65,8 @@ router.beforeEach((to, from, next) => {
 })
 
 new Vue({
-  i18n,
-  router,
-  store,
-  render: h => h(App)
+	i18n,
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')

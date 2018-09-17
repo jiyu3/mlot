@@ -7,13 +7,13 @@ router.get('/', function (req, res, next) {
 
 /**
  * Save login user information into glot database server.
- * uid			number
- * hashed_token	string
- * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "uid": 12345, "hashed_token": "randomstring" } }
+ * hashed_uid	string(64)
+ * hashed_token	string(64)
+ * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
  */
 router.post('/login', function (req, res, next) {
 	let p = req.body.params
-	let query = `INSERT INTO user(firebase_uid, firebase_token) VALUES(${p.uid}, '${p.hashed_token}')`
+	let query = `INSERT INTO user(firebase_uid, firebase_token) VALUES('${p.hashed_uid}', '${p.hashed_token}')`
 	let db = require('../lib/db.js').init()
 
 	db.query(query, function (error, results, fields) {
@@ -38,13 +38,13 @@ router.post('/login', function (req, res, next) {
 
 /**
  * Validate user connection with comparing client token and database session.
- * uid			number
- * hashed_token string
- * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "id": 12345, "token": randomstring } }
+ * hashed_uid	string(64)
+ * hashed_token	string(64)
+ * usage: POST http://lot.green/validate/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
  */
 router.post('/validate', function (req, res, next) {
 	let p = req.body.params
-	let query = `SELECT count(*) FROM user WHERE firebase_token = '${p.hashed_token}' AND firebase_uid = ${p.uid}`
+	let query = `SELECT count(*) FROM user WHERE firebase_token = '${p.hashed_token}' AND firebase_uid = '${p.hashed_uid}'`
 	let db = require('../lib/db.js').init()
 
 	db.query(query, function (error, results, fields) {
@@ -72,13 +72,13 @@ router.post('/validate', function (req, res, next) {
 
 /**
  * Delete login user information from glot database server.
- * uid			number
- * hashed_token string
- * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "id": 12345, "token": randomstring } }
+ * hashed_uid	string(64)
+ * hashed_token	string(64)
+ * usage: POST http://lot.green/logout/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
  */
 router.post('/logout', function (req, res, next) {
 	let p = req.body.params
-	let query = `DELETE FROM user WHERE firebase_token = '${p.hashed_token}' AND firebase_uid = ${p.uid}`
+	let query = `DELETE FROM user WHERE firebase_token = '${p.hashed_token}' AND firebase_uid = '${p.hashed_uid}'`
 	let db = require('../lib/db.js').init()
 
 	db.query(query, function (error, results, fields) {
