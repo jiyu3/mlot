@@ -1,4 +1,16 @@
 <div>
-	I'm in Edit!<br>
-	<button class="btn btn-danger" @click="$router.push('/logout')">logout</button>
+	<b-container>
+		<b-row>
+			<b-col>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" class="form-control" id="email" v-model="email">
+					<label for="bitcoin_addr">Bitcoin Address:</label>
+					<input type="text" class="form-control" id="bitcoin_addr" v-model="bitcoin_addr">
+					<button class="btn btn-success" @click="edit">登録</button>
+				</div>
+				<button class="btn btn-danger" @click="$router.push('/logout')">logout</button>
+			</b-col>
+		</b-row>
+	</b-container>
 </div>

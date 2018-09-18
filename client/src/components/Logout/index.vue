@@ -7,10 +7,7 @@ export default {
 	created() {
 		let self = this
 
-		this.$parent.rpc("user", "logout", {
-			hashed_uid: this.$store.getters.hashed_uid,
-			hashed_token: this.$store.getters.hashed_token
-		}).then(r => {
+		this.$parent.rpc("user", "logout", this.$store.getters.auth).then(r => {
 			firebase.auth().signOut().then(() => {
 				firebase.auth().revokeRefreshTokens(self.$store.state.uid)
 				self.$store.commit("logout")
