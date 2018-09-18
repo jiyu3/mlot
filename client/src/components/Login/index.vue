@@ -17,10 +17,7 @@ export default {
 					self.$store.commit("login", result.user)
 
 					let login_url = this.$store.getters.db_url + "user/login"
-					this.$parent.rpc("user", "login", {
-						hashed_uid: this.$store.getters.hashed_uid,
-						hashed_token: this.$store.getters.hashed_token
-					}).catch(e => {
+					this.$parent.rpc("user", "login", this.$store.getters.auth).catch(e => {
 						firebase.auth().signOut()
 						throw e
 					})

@@ -30,11 +30,11 @@ export default new Vuex.Store({
 			return state.config[process.env.NODE_ENV].db.base_url
 //			return JSON.parse(JSON.stringify(state.config))[process.env.NODE_ENV].db.base_url
 		},
-		hashed_uid(state) {
-			return doubleHash(state.user.uid)
-		},
-		hashed_token(state) {
-			return doubleHash(state.user.refreshToken)
+		auth(state) {
+			return {
+				hashed_uid: doubleHash(state.user.uid),
+				hashed_token: doubleHash(state.user.refreshToken)
+			}
 		}
 	},
 	actions: {

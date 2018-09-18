@@ -40,8 +40,8 @@ app.use(function(err, req, res, next) {
 
 	// render the error page
 	res.status(err.status || 500)
-	console.log("error in routing")
-	res.send('error in routing')
+	console.log(err)
+	res.send(err) // todo: エラーを直接出力しないようにする
 })
 
 module.exports = app

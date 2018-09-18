@@ -2,17 +2,28 @@
 <style src="./style.css"></style>
 
 <script>
+
 export default {
 	data() {
-		return {}
+		return {
+			email: "m@jiyu.lol",
+			bitcoin_addr: "2N7jkQaWhCM6m1E6myB8wCQtbw4mjkwJFQf"
+		}
 	},
 	methods: {
+		edit() {
+			this.$parent.rpc("user", "edit",
+				Object.assign({ email: this.email, bitcoin_addr: this.bitcoin_addr }, this.$store.getters.auth)
+			).then(r => {
+				console.log("email and bitcoin_addr saved.")
+
+			}).catch(e => {
+				console.log("error to save email and bitcoin_addr.")
+			})
+		}
 	},
 	mounted() {
-		this.$parent.rpc("user", "validate", {
-			hashed_uid: this.$store.getters.hashed_uid,
-			hashed_token: this.$store.getters.hashed_token
-		}).then(r => {
+		this.$parent.rpc("user", "validate", this.$store.getters.auth).then(r => {
 			console.log("get user data from db")
 		}).catch(e => {
 			console.log("display err screen")
