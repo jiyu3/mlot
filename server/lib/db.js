@@ -1,15 +1,54 @@
-exports.init = function () {
-	let mysql = require('mysql')
-	let conf = require('../config.json')
-	let db = mysql.createConnection(conf.db)
-	db.connect()
-	return db
+module.exports = class DB {
+	constructor() {
+		let mysql = require('mysql')
+		let conf = require('../config.json')
+		this.db = mysql.createConnection(conf.db)
+		this.db.connect()
+	}
+
+	select(table, value, where) {
+		let query = `SELECT ${value} FROM ${table} WHERE ${where}`
+		return this._q(query)
+	}
+
+	/**
+	 * set should be like: { id: 10, name: "jiyu", email: "m@jiyu.lol" }
+	 */
+	update(table, set, where) {
+		let _set = ""
+		Object.keys(set).forEach(key => {
+			_set += `${key} = "${set[key]}",`
+		})
+		_set = _set.slice(0, -1)
+
+		let query = `UPDATE ${table} SET ${_set} WHERE ${where}`
+		return this._q(query)
+	}
+
+	/**
+	 * set should be like: { id: 10, name: "jiyu", email: "m@jiyu.lol" }
+	 */
+	insert(table, set) {
+		let fields = "("
+		let values = "("
+		Object.keys(set).forEach(key => {
+			fields += key + ","
+			values += '"' + set[key] + '",'
+		})
+		fields = fields.slice(0, -1) + ")"
+		values = values.slice(0, -1) + ")"
+
+		let query = `INSERT INTO ${table} ${fields} VALUES ${values}`
+		return this._q(query)
+	}
+
+	_q(query) {
+		return new Promise((resolve, reject) => {
+			this.db.query(query, function (error, results, fields) {
+				console.log(error)
+				error ? reject(error) : resolve(results)
+			})
+		})
+	}
 }
 
-// exports.initSync = function () {
-// 	let mysql = require("sync-mysql")
-// 	let conf = require('../config.json')
-// 	let db = new mysql(conf.db)
-// 	db.connect()
-// 	return db
-// }
