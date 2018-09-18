@@ -3,6 +3,7 @@
 
 <script>
 
+
 export default {
 	data() {
 		return {
@@ -16,7 +17,11 @@ export default {
 				Object.assign({ email: this.email, bitcoin_addr: this.bitcoin_addr }, this.$store.getters.auth)
 			).then(r => {
 				console.log("email and bitcoin_addr saved.")
-
+				let toast = this.$toasted.show("Updated!", {
+					theme: "bubble",
+					position: "top-center",
+					duration : 2000
+				});
 			}).catch(e => {
 				console.log("error to save email and bitcoin_addr.")
 			})

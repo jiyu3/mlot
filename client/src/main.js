@@ -15,6 +15,9 @@ Vue.use(BootstrapVue);
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import Toasted from 'vue-toasted';
+Vue.use(Toasted)
+
 /* Firebase Setting start */
 import firebase from 'firebase'
 
