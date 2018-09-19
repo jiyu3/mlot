@@ -7,8 +7,9 @@
 export default {
 	data() {
 		return {
-			email: null,
-			bitcoin_addr: null
+			loading: true,
+			email: "loading...",
+			bitcoin_addr: "loading..."
 		}
 	},
 	methods: {
@@ -34,6 +35,8 @@ export default {
 		this.rpc("user", "get", { token: this.$store.state.token }).then(r => {
 			this.email = r.data.result.email
 			this.bitcoin_addr = r.data.result.bitcoin_addr
+		}).finally(() => {
+			this.loading = false
 		})
 	}
 }

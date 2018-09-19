@@ -1,3 +1,4 @@
+/* eslint-disable */
 process.title = "glot-client"
 
 import Vue from 'vue'
@@ -34,6 +35,37 @@ firebase.initializeApp(config);
 
 Vue.config.productionTip = false
 
+Vue.mixin({
+	methods: {
+		rpc(table, method, params) {
+			let url = this.$store.getters.db_url + table + "/" + method
+			let data = {
+				jsonrpc: "2.0",
+				method: "login",
+				params: params
+			}
+
+			return new Promise((resolve, reject) => {
+				let interval = setInterval(() => {
+					if (params == null || params.token !== null) {
+						clearInterval(interval)
+
+						this.axios.post(
+							url, data
+						).then(r => {
+							resolve(r)
+						}).catch(e => {
+							reject(e)
+						})
+					} else {
+						params.token = this.$store.state.token
+					}
+				}, 100)
+			})
+		}
+	}
+})
+
 router.beforeEach((to, from, next) => {
 	let skipAuth = to.matched.some(record => record.meta.skipAuth)
 	firebase.auth().onAuthStateChanged(function (user) {
@@ -69,31 +101,10 @@ router.beforeEach((to, from, next) => {
 	})
 })
 
-Vue.mixin({
-	methods: {
-		rpc(table, method, params) {
-			let url = this.$store.getters.db_url + table + "/" + method
-			let data = {
-				jsonrpc: "2.0",
-				method: "login",
-				params: params
-			}
-			return new Promise((resolve, reject) => {
-				this.axios.post(
-					url, data
-				).then(r => {
-					resolve(r)
-				}).catch(e => {
-					reject(e)
-				})
-			})
-		}
-	}
-})
-
 new Vue({
 	i18n,
 	router,
 	store,
 	render: h => h(App)
 }).$mount('#app')
+

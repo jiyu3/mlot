@@ -16,7 +16,7 @@ let user = require("../controllers/user.class")
 USER = new user()
 
 router.get('/', function (req, res, next) {
-	res.send('Be yourself; everything else is taken.')
+	res.json('Be yourself; everything else is taken.')
 })
 
 /**
@@ -30,17 +30,17 @@ router.post('/login', async function (req, res, next) {
 	USER.validate(p.token).then(r => {
 		res.status(200)
 		res_rpc.result = { "error": null }
-		res.send(JSON.stringify(res_rpc))
+		res.json(JSON.stringify(res_rpc))
 	}).catch(e => {
 		if (e.hashed_uid != null) {
 			DB.insert("user", { hashed_uid: e.hashed_uid }).then(r => {
 				res.status(200)
 				res_rpc.result = { "error": null }
-				res.send(JSON.stringify(res_rpc))
+				res.json(JSON.stringify(res_rpc))
 			}).catch(e => {
 				res.status(500)
 				res_rpc.result = { "error": error.code }
-				res.send(JSON.stringify(res_rpc))
+				res.json(JSON.stringify(res_rpc))
 			})
 		}
 	})
@@ -60,16 +60,16 @@ router.post('/get', async function (req, res, next) {
 					"error": null, email: data[0].email, bitcoin_addr: data[0].bitcoin_addr
 				}
 			}
-			res.send(JSON.stringify(res_rpc))
+			res.json(JSON.stringify(res_rpc))
 		}).catch(e => {
 			res.status(500)
 			res_rpc.result = { "error": e.code }
-			res.send(JSON.stringify(res_rpc))
+			res.json(JSON.stringify(res_rpc))
 		})
 	}).catch(e => {
 		res.status(500)
 		res_rpc.result = { "error": e.code }
-		res.send(JSON.stringify(res_rpc))
+		res.json(JSON.stringify(res_rpc))
 	})
 })
 
@@ -95,18 +95,18 @@ router.post('/edit', async function (req, res, next) {
 				res.status(200)
 				res_rpc.result = { "error": null }
 			}
-			res.send(JSON.stringify(res_rpc))
+			res.json(JSON.stringify(res_rpc))
 		}).catch(e => {
 		    console.log("e.code", e.code)
 			res.status(500)
 			res_rpc.result = { "error": e.code }
-			res.send(JSON.stringify(res_rpc))
+			res.json(JSON.stringify(res_rpc))
 		})
 	}).catch(e => {
 		res.status(500)
 		res_rpc.result = { "error": e.code }
-		res.send(JSON.stringify(res_rpc))
+		res.json(JSON.stringify(res_rpc))
 	})
 })
 
-module.exports = router;
+module.exports = router
