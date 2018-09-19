@@ -1,15 +1,16 @@
 process.env.PORT = 9999
 process.title = "glot-server"
 
-var createError = require('http-errors')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+let createError = require('http-errors')
+let express = require('express')
+let path = require('path')
+let cookieParser = require('cookie-parser')
+let logger = require('morgan')
 
-var userRouter = require('./routes/user')
+let userRouter = require('./routes/user')
+let lotRouter = require('./routes/lot')
 
-var app = express()
+let app = express()
 
 app.use(logger('dev'))
 app.use(express.json())
@@ -26,6 +27,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/user', userRouter)
+app.use('/lot', lotRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

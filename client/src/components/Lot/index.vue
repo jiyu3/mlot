@@ -7,8 +7,14 @@ export default {
 		return {}
 	},
 	methods: {
+
 	},
 	mounted() {
+		this.rpc("lot", "get").then(r => {
+			console.log(r)
+
+		}).finally(() => {
+		})
 	}
 }
 </script>

@@ -4,9 +4,9 @@
 			<b-col>
 				<div class="form-group">
 					<label for="email">Email:</label>
-					<input type="email" class="form-control" id="email" v-model="email">
+					<input type="email" class="form-control" id="email" v-model="email" :disabled="loading">
 					<label for="bitcoin_addr">Bitcoin Address:</label>
-					<input type="text" class="form-control" id="bitcoin_addr" v-model="bitcoin_addr">
+					<input type="text" class="form-control" id="bitcoin_addr" v-model="bitcoin_addr" :disabled="loading">
 					<button class="btn btn-success" @click="edit">登録</button>
 				</div>
 				<button class="btn btn-danger" @click="$router.push('/logout')">logout</button>
