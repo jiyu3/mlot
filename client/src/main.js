@@ -38,7 +38,6 @@ router.beforeEach((to, from, next) => {
 	let skipAuth = to.matched.some(record => record.meta.skipAuth)
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user && !store.state.login) {
-			console.log(user.uid)
 			firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
 				store.commit("login", token)
 			})
@@ -68,6 +67,28 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 	})
+})
+
+Vue.mixin({
+	methods: {
+		rpc(table, method, params) {
+			let url = this.$store.getters.db_url + table + "/" + method
+			let data = {
+				jsonrpc: "2.0",
+				method: "login",
+				params: params
+			}
+			return new Promise((resolve, reject) => {
+				this.axios.post(
+					url, data
+				).then(r => {
+					resolve(r)
+				}).catch(e => {
+					reject(e)
+				})
+			})
+		}
+	}
 })
 
 new Vue({

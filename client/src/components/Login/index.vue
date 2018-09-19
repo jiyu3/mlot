@@ -15,7 +15,7 @@ export default {
 				result => {
 					// TODO: https化
 					firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-						this.$parent.rpc("user", "login", { "token": token } ).catch(e => {
+						this.rpc("user", "login", { "token": token } ).catch(e => {
 							this.failed()
 						});
 					}).catch(e => {

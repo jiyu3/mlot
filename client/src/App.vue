@@ -16,26 +16,6 @@
 <script>
 export default {
 	methods: {
-		rpc(table, method, params) {
-			let url = this.$store.getters.db_url + table + "/" + method
-			let data = {
-				jsonrpc: "2.0",
-				method: "login",
-				params: params
-			}
-			console.log("url, data", url, data)
-			return new Promise((resolve, reject) => {
-				this.axios.post(
-					url, data
-				).then(r => {
-					console.log(r) // TODO: delete console.log
-					resolve(r)
-				}).catch(e => {
-					console.log(data, e) // TODO: delete console.log
-					reject(e)
-				})
-			})
-		}
 	},
 	mounted() {
 	}
