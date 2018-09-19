@@ -21,7 +21,6 @@ router.get('/', function (req, res, next) {
 
 /**
  * Save login user information into glot database server.
- * hashed_uid	string(64)
  * @param {string} [token] - firebase uid token
  * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
  */
@@ -46,31 +45,6 @@ router.post('/login', async function (req, res, next) {
 		}
 	})
 })
-
-/**
- * Validate user connection with comparing client token and database token.
- * @param {string} [token]
- * usage: POST http://lot.green/validate/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
- */
-// router.post('/validate', function (req, res, next) {
-// 	let p = req.body.params
-
-// 	USER.validate(p.token).then(r => {
-// 		if (r.error === null) {
-// 			res.status(200)
-// 			res_rpc.result = { "error": null }
-// 		} else {
-// 			res.status(403)
-// 			res_rpc.result = { "error": r.error }
-// 		}
-// 		res.send(JSON.stringify(res_rpc))
-// 	}).catch(e => {
-// 		res.status(500)
-// 		res_rpc.result = { "error": e.code }
-// 		res.send(JSON.stringify(res_rpc))
-// 	})
-// });
-
 
 router.post('/get', async function (req, res, next) {
 	let p = req.body.params
@@ -101,11 +75,9 @@ router.post('/get', async function (req, res, next) {
 
 /**
  * Edit user data.
- * hashed_uid	string(64)
- * hashed_token	string(64)
- * email		string(255)
- * bitcoin_addr	string(36)
- * usage: POST http://lot.green/logout/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
+ * @param {string} [token]
+ * @return {object} object includes email and bitcoin_addr
+ * usage: POST http://lot.green/edit/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
  */
 router.post('/edit', async function (req, res, next) {
 	let p = req.body.params

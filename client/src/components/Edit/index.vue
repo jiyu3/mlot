@@ -13,7 +13,7 @@ export default {
 	},
 	methods: {
 		edit() {
-			this.$parent.rpc("user", "edit",
+			this.rpc("user", "edit",
 				{ email: this.email, bitcoin_addr: this.bitcoin_addr, token: this.$store.state.token }
 			).then(r => {
 				let toast = this.$toasted.show("Updated!", {
@@ -31,7 +31,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.$parent.rpc("user", "get", { token: this.$store.state.token }).then(r => {
+		this.rpc("user", "get", { token: this.$store.state.token }).then(r => {
 			this.email = r.data.result.email
 			this.bitcoin_addr = r.data.result.bitcoin_addr
 		})
