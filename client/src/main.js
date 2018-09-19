@@ -38,7 +38,10 @@ router.beforeEach((to, from, next) => {
 	let skipAuth = to.matched.some(record => record.meta.skipAuth)
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user && !store.state.login) {
-			store.commit("login", user)
+			console.log(user.uid)
+			firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
+				store.commit("login", token)
+			})
 		} else if (!user && store.state.login) {
 			store.commit("logout")
 		}
@@ -64,7 +67,7 @@ router.beforeEach((to, from, next) => {
 				next()
 			}
 		}
-	});
+	})
 })
 
 new Vue({

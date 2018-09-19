@@ -45,8 +45,13 @@ module.exports = class DB {
 	_q(query) {
 		return new Promise((resolve, reject) => {
 			this.db.query(query, function (error, results, fields) {
-				console.log(error)
-				error ? reject(error) : resolve(results)
+				if (error) {
+					console.log({ error: error.code, query: query })
+					reject(error)
+				} else {
+					console.log({ query: query })
+					resolve(results)
+				}
 			})
 		})
 	}
