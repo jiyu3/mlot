@@ -7,31 +7,33 @@
 export default {
 	data() {
 		return {
-			email: "m@jiyu.lol",
-			bitcoin_addr: "2N7jkQaWhCM6m1E6myB8wCQtbw4mjkwJFQf"
+			email: null,
+			bitcoin_addr: null
 		}
 	},
 	methods: {
 		edit() {
 			this.$parent.rpc("user", "edit",
-				Object.assign({ email: this.email, bitcoin_addr: this.bitcoin_addr }, this.$store.getters.auth)
+				{ email: this.email, bitcoin_addr: this.bitcoin_addr, token: this.$store.state.token }
 			).then(r => {
-				console.log("email and bitcoin_addr saved.")
 				let toast = this.$toasted.show("Updated!", {
 					theme: "bubble",
 					position: "top-center",
-					duration : 2000
+					duration : 1500
 				});
 			}).catch(e => {
-				console.log("error to save email and bitcoin_addr.")
+				let toast = this.$toasted.show("Failed", {
+					theme: "outline",
+					position: "top-center",
+					duration : 1500
+				});
 			})
 		}
 	},
 	mounted() {
-		this.$parent.rpc("user", "validate", this.$store.getters.auth).then(r => {
-			console.log("get user data from db")
-		}).catch(e => {
-			console.log("display err screen")
+		this.$parent.rpc("user", "get", { token: this.$store.state.token }).then(r => {
+			this.email = r.data.result.email
+			this.bitcoin_addr = r.data.result.bitcoin_addr
 		})
 	}
 }

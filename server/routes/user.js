@@ -1,6 +1,19 @@
 let express = require('express');
 let router = express.Router();
-let DB = require("../lib/db")
+
+let res_rpc = {
+	jsonrpc: "2.0",
+	result: null
+}
+
+let util = require("../lib/util.class")
+const UTIL = new util()
+
+let db = require("../lib/db.class")
+const DB = new db()
+
+let user = require("../controllers/user.class")
+USER = new user()
 
 router.get('/', function (req, res, next) {
 	res.send('Be yourself; everything else is taken.')
@@ -9,113 +22,82 @@ router.get('/', function (req, res, next) {
 /**
  * Save login user information into glot database server.
  * hashed_uid	string(64)
- * hashed_token	string(64)
- * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
+ * @param {string} [token] - firebase uid token
+ * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
  */
-router.post('/login', function (req, res, next) {
+router.post('/login', async function (req, res, next) {
 	let p = req.body.params
 
-	findByUid(p.hashed_uid).then(function () {
+	USER.validate(p.token).then(r => {
+		res.status(200)
+		res_rpc.result = { "error": null }
+		res.send(JSON.stringify(res_rpc))
 	}).catch(e => {
-		if (e == "Could not find user") {
-			let query = `INSERT INTO user(firebase_uid, firebase_token) VALUES('${p.hashed_uid}', '${p.hashed_token}')`
-			let db = require('../lib/db').init()
-
-			db.query(query, function (error, results, fields) {
-				let r = {
-					jsonrpc: "2.0",
-					result: null
-				}
-
-				if (error) {
-					res.status(500)
-					r.result = { "error": error.code, "query": query }
-				} else {
-					res.status(200)
-					r.result = "success"
-				}
-
-				res.send(JSON.stringify(r));
+		if (e.hashed_uid != null) {
+			DB.insert("user", { hashed_uid: e.hashed_uid }).then(r => {
+				res.status(200)
+				res_rpc.result = { "error": null }
+				res.send(JSON.stringify(res_rpc))
+			}).catch(e => {
+				res.status(500)
+				res_rpc.result = { "error": error.code }
+				res.send(JSON.stringify(res_rpc))
 			})
-		} else {
-
 		}
 	})
-
-	db.end()
-});
+})
 
 /**
  * Validate user connection with comparing client token and database token.
- * hashed_uid	string(64)
- * hashed_token	string(64)
- * usage: POST http://lot.green/validate/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
+ * @param {string} [token]
+ * usage: POST http://lot.green/validate/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
  */
-router.post('/validate', function (req, res, next) {
-	let p = req.body.params
-	let user = require("../contorllers/user")
-
-	user.validate(p.hashed_uid, p.hashed_token).then(function () {
-
-	}).catch(function () {
-
-	})
-
-	db.query(query, function (error, results, fields) {
-		let r = {
-			jsonrpc: "2.0",
-			result: null
-		}
-
-		if (error) {
-			res.status(500)
-			r.result = { "error": error.code, "query": query  }
-		} else if (results[0]['count(*)'] == 0) {
-			res.status(403)
-			r.result = "failure"
-		} else {
-			res.status(200)
-			r.result = "success"
-		}
-
-		res.send(JSON.stringify(r))
-	})
-
-});
-
-/**
- * Delete login user information from glot database server.
- * hashed_uid	string(64)
- * hashed_token	string(64)
- * usage: POST http://lot.green/logout/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
- */
-// router.post('/logout', function (req, res, next) {
+// router.post('/validate', function (req, res, next) {
 // 	let p = req.body.params
-// 	let query = `DELETE FROM user WHERE firebase_token = '${p.hashed_token}' AND firebase_uid = '${p.hashed_uid}'`
-// 	let db = require('../lib/db').init()
 
-// 	db.query(query, function (error, results, fields) {
-// 		let r = {
-// 			jsonrpc: "2.0",
-// 			result: null
-// 		}
-
-// 		if (error) {
-// 			res.status(500)
-// 			r.result = { "error": error.code, "query": query  }
-// 		} else if (results.affectedRows == 0) {
-// 			res.status(403)
-// 			r.result = "failure"
-// 		} else {
+// 	USER.validate(p.token).then(r => {
+// 		if (r.error === null) {
 // 			res.status(200)
-// 			r.result = "success"
+// 			res_rpc.result = { "error": null }
+// 		} else {
+// 			res.status(403)
+// 			res_rpc.result = { "error": r.error }
 // 		}
-
-// 		res.send(JSON.stringify(r))
+// 		res.send(JSON.stringify(res_rpc))
+// 	}).catch(e => {
+// 		res.status(500)
+// 		res_rpc.result = { "error": e.code }
+// 		res.send(JSON.stringify(res_rpc))
 // 	})
-
-// 	db.end()
 // });
+
+
+router.post('/get', async function (req, res, next) {
+	let p = req.body.params
+
+	USER.validate(p.token).then(r => {
+		DB.select("user", "email, bitcoin_addr", `hashed_uid = '${r.hashed_uid}'`).then(data => {
+			if (data.length == 0) {
+				res.status(403)
+				res_rpc.result = { "error": "Coundn't find user" }
+			} else {
+				res.status(200)
+				res_rpc.result = {
+					"error": null, email: data[0].email, bitcoin_addr: data[0].bitcoin_addr
+				}
+			}
+			res.send(JSON.stringify(res_rpc))
+		}).catch(e => {
+			res.status(500)
+			res_rpc.result = { "error": e.code }
+			res.send(JSON.stringify(res_rpc))
+		})
+	}).catch(e => {
+		res.status(500)
+		res_rpc.result = { "error": e.code }
+		res.send(JSON.stringify(res_rpc))
+	})
+})
 
 /**
  * Edit user data.
@@ -125,33 +107,34 @@ router.post('/validate', function (req, res, next) {
  * bitcoin_addr	string(36)
  * usage: POST http://lot.green/logout/ { "jsonrpc": "2.0", "method": "login", "params": { "hashed_uid": "hashedstring", "hashed_token": "hashedstring" } }
  */
-router.post('/edit', function (req, res, next) {
+router.post('/edit', async function (req, res, next) {
 	let p = req.body.params
-	let db = new DB()
-	let r = {
-		jsonrpc: "2.0",
-		result: null
-	}
 
-	db.update("user", {
-		"email": p.email,
-		"bitcoin_addr": p.bitcoin_addr
-	}, `firebase_token = '${p.hashed_token}' AND firebase_uid = '${p.hashed_uid}'`
-	).then(data => {
-		if (data.affectedRows == 0) {
-			res.status(403)
-			r.result = "failure"
-		} else {
-			res.status(200)
-			r.result = "success"
-		}
-		res.send(JSON.stringify(r))
+	USER.validate(p.token).then(r => {
+		DB.update("user", {
+				"email": p.email,
+				"bitcoin_addr": p.bitcoin_addr
+			}, `hashed_uid = '${r.hashed_uid}'`
+		).then(data => {
+			if (data.affectedRows == 0) {
+				res.status(403)
+				res_rpc.result = { "error": "Coundn't find user" }
+			} else {
+				res.status(200)
+				res_rpc.result = { "error": null }
+			}
+			res.send(JSON.stringify(res_rpc))
+		}).catch(e => {
+		    console.log("e.code", e.code)
+			res.status(500)
+			res_rpc.result = { "error": e.code }
+			res.send(JSON.stringify(res_rpc))
+		})
 	}).catch(e => {
 		res.status(500)
-		r.result = "network error"
-		res.send(JSON.stringify(r))
+		res_rpc.result = { "error": e.code }
+		res.send(JSON.stringify(res_rpc))
 	})
-
 })
 
 module.exports = router;

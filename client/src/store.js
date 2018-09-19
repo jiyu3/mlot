@@ -3,41 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-let hash = require('hash.js')
-function doubleHash(v) {
-	return hash.sha256().update(hash.sha256().update(v).digest('hex')).digest('hex')
-}
-
 export default new Vuex.Store({
 	state: {
 		login: false,
 		redirect_default: "lot",
-		user: null,
+		token: null,
 		config: require("./config.json")
 	},
 	mutations: {
-		login(state, user) {
+		login(state, token) {
 			state.login = true
-			state.user = user
+			state.token = token
 		},
 		logout(state) {
 			state.login = false
-			state.user = null
+			state.token = null
 		},
 	},
 	getters: {
 		db_url(state) {
 			return state.config[process.env.NODE_ENV].db.base_url
-//			return JSON.parse(JSON.stringify(state.config))[process.env.NODE_ENV].db.base_url
-		},
-		auth(state) {
-			return {
-				hashed_uid: doubleHash(state.user.uid),
-				hashed_token: doubleHash(state.user.refreshToken)
-			}
 		}
 	},
 	actions: {
-		// async only
 	}
 })

@@ -23,6 +23,7 @@ export default {
 				method: "login",
 				params: params
 			}
+			console.log("url, data", url, data)
 			return new Promise((resolve, reject) => {
 				this.axios.post(
 					url, data
@@ -42,7 +43,7 @@ export default {
 </script>
 
 <style>
-html, div {
+html, #app {
 	background: #e1fae1;
 	font-size: 18px;
 }
