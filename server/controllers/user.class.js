@@ -1,17 +1,14 @@
 module.exports = class USER {
 	constructor() {
 		let db = require('../lib/db.class')
-		this.DB = new db()
+		this.db = new db()
 
-		this.ADMIN = require('firebase-admin');
-		var serviceAccount = require('../serviceAccountKey.json');
-		this.ADMIN.initializeApp({
-			credential: this.ADMIN.credential.cert(serviceAccount),
-			databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
-		});
+		let firebase = require('../lib/firebase.class');
+		let f = new firebase()
+		this.admin = f.admin()
 
 		let util = require("../lib/util.class")
-		this.UTIL = new util()
+		this.util = new util()
 	}
 
 	/**
@@ -21,14 +18,16 @@ module.exports = class USER {
 	 */
 	validate(token) {
 		return new Promise((resolve, reject) => {
-			this.ADMIN.auth().verifyIdToken(token).then(decodedToken => {
-				let hashed_uid = this.UTIL.doubleHash(decodedToken.uid)
+			this.admin.auth().verifyIdToken(token).then(decodedToken => {
+				let hashed_uid = this.util.doubleHash(decodedToken.uid)
 				this.findByUid(hashed_uid).then(r => {
 					resolve({ error: null, hashed_uid: hashed_uid })
 				}).catch(e => {
+					console.log("Coundn't find user")
 					reject({ error: "Coundn't find user", hashed_uid: hashed_uid })
 				})
 			}).catch(e => {
+				console.log("Coundn't execute verifyIdToken()")
 				reject({ "error": e, hashed_uid: null })
 			})
 		})
@@ -43,7 +42,7 @@ module.exports = class USER {
 		return new Promise((resolve, reject) => {
 			let where = `hashed_uid = '${hashed_uid}'`
 
-			this.DB.select("user", "count(*)", where).then(r => {
+			this.db.select("user", "count(*)", where).then(r => {
 				if (r[0]['count(*)'] == 0) {
 					reject({ error: "Coundn't find user" })
 				} else {

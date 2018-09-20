@@ -8,7 +8,7 @@ export default new Vuex.Store({
 		login: false,
 		redirect_default: "lot",
 		token: null,
-		config: require("./config.json")
+		config: require("./config.js")
 	},
 	mutations: {
 		login(state, token) {
@@ -23,6 +23,9 @@ export default new Vuex.Store({
 	getters: {
 		db_url(state) {
 			return state.config[process.env.NODE_ENV].db.base_url
+		},
+		actionCodeSettings(state) {
+			return state.config[process.env.NODE_ENV].actionCodeSettings
 		}
 	},
 	actions: {

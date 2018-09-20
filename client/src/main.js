@@ -38,6 +38,7 @@ Vue.config.productionTip = false
 Vue.mixin({
 	methods: {
 		rpc(table, method, params) {
+			console.log("this.$store.getters.db_url", this.$store.getters.db_url)
 			let url = this.$store.getters.db_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
@@ -53,7 +54,8 @@ Vue.mixin({
 						this.axios.post(
 							url, data
 						).then(r => {
-							resolve(r)
+							let result = JSON.parse(r.data).result
+							resolve(result)
 						}).catch(e => {
 							reject(e)
 						})

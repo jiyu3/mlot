@@ -33,8 +33,8 @@ export default {
 	},
 	mounted() {
 		this.rpc("user", "get", { token: this.$store.state.token }).then(r => {
-			this.email = r.data.result.email
-			this.bitcoin_addr = r.data.result.bitcoin_addr
+			this.email = r.email
+			this.bitcoin_addr = r.bitcoin_addr
 		}).finally(() => {
 			this.loading = false
 		})
