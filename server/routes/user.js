@@ -67,6 +67,7 @@ router.post('/get', async function (req, res, next) {
 			res.json(JSON.stringify(res_rpc))
 		})
 	}).catch(e => {
+		console.log("validatin error")
 		res.status(500)
 		res_rpc.result = { "error": e.code }
 		res.json(JSON.stringify(res_rpc))

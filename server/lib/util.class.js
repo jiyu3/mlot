@@ -1,7 +1,5 @@
 module.exports = class UTIL {
 	constructor() {
-		let DB = require('../lib/db.class')
-		this.db = new DB()
 	}
 
 	/**

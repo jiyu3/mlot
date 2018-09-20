@@ -12,7 +12,6 @@ export default {
 	mounted() {
 		this.rpc("lot", "get").then(r => {
 			console.log(r)
-
 		}).finally(() => {
 		})
 	}

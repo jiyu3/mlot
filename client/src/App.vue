@@ -1,10 +1,8 @@
 <template>
 	<div id="app">
 		<header>
-			<router-link class="btn" to="/" v-if="!$store.state.login">Home</router-link>
 			<router-link class="btn" to="/edit" v-if="$store.state.login">Edit</router-link>
 			<router-link class="btn" to="/lot" v-if="$store.state.login">Lot</router-link>
-			<router-link class="btn" to="/my" v-if="$store.state.login">My</router-link>
 			<router-link class="btn" to="/result" v-if="$store.state.login">Result</router-link>
 		</header>
 		<router-view/>
@@ -18,6 +16,8 @@ export default {
 	methods: {
 	},
 	mounted() {
+		let a = require("./config.js")
+		console.log(a)
 	}
 }
 </script>

@@ -38,12 +38,6 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "about" */ './components/Lot/index.vue')
 		},
 		{
-			path: '/my',
-			name: 'My',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/My/index.vue')
-		},
-		{
 			path: '/result',
 			name: 'Result',
 			// lazy load

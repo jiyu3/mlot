@@ -9,7 +9,8 @@
 					<button class="btn btn-success" v-on:click="login('Twitter')">{{ $t("login.twitter") }}</button><br><br>
 				</div>
 				<div id="auth" v-if="!$store.state.login">
-					<button class="btn btn-success" v-on:click="login('Facebook')">{{ $t("login.facebook") }}</button><br><br>
+					<input type="email" v-model="email">
+					<button class="btn btn-success" v-on:click="sendEmailLink()">{{ $t("login.email") }}</button><br><br>
 				</div>
 			</b-col>
 		</b-row>
