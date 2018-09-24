@@ -16,8 +16,6 @@ export default {
 	methods: {
 	},
 	mounted() {
-		let a = require("./config.js")
-		console.log(a)
 	}
 }
 </script>
