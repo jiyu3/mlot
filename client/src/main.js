@@ -49,15 +49,16 @@ Vue.mixin({
 				params: params
 			}
 			let error_count = 0
+			let interval = 100
 
 			let loader = null
 			if (loading_overlay) {
 				loader = this.$loading.show()
 			}
 			return new Promise((resolve, reject) => {
-				let interval = setInterval(() => {
+				let loop = setInterval(() => {
 					if (params == null || params.token !== null) {
-						clearInterval(interval)
+						clearInterval(loop)
 
 						this.axios.post(
 							url, data
@@ -72,14 +73,14 @@ Vue.mixin({
 							}
 						})
 					} else {
-						if (error_count++ >= 3) {
-							clearInterval(interval)
+						if (++error_count >= (5000 / interval)) {
+							clearInterval(loop)
 							alert("予期しないエラーが発生しました。ログインし直してください")
 							this.$router.push("/logout")
 						}
 						params.token = this.$store.state.token
 					}
-				}, 100)
+				}, interval)
 			})
 		}
 	}

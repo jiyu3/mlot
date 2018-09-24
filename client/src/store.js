@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		login: false,
-		redirect_default: "lot",
+		redirect_default: "edit",
 		token: null,
 		config: require("./config.js")
 	},
