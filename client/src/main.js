@@ -11,6 +11,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
+Vue.use(Loading)
+
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 import 'bootstrap/dist/css/bootstrap.css'
@@ -37,15 +41,19 @@ Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
-		rpc(table, method, params) {
-			console.log("this.$store.getters.db_url", this.$store.getters.db_url)
+		rpc(table, method, params, loading_overlay = false) {
 			let url = this.$store.getters.db_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
 				method: "login",
 				params: params
 			}
+			let error_count = 0
 
+			let loader = null
+			if (loading_overlay) {
+				loader = this.$loading.show()
+			}
 			return new Promise((resolve, reject) => {
 				let interval = setInterval(() => {
 					if (params == null || params.token !== null) {
@@ -58,8 +66,17 @@ Vue.mixin({
 							resolve(result)
 						}).catch(e => {
 							reject(e)
+						}).finally(r => {
+							if (loader != null) {
+								loader.hide()
+							}
 						})
 					} else {
+						if (error_count++ >= 3) {
+							clearInterval(interval)
+							alert("予期しないエラーが発生しました。ログインし直してください")
+							this.$router.push("/logout")
+						}
 						params.token = this.$store.state.token
 					}
 				}, 100)
@@ -80,14 +97,12 @@ router.beforeEach((to, from, next) => {
 		}
 		if (!skipAuth) {
 			if (!user) {
-				let n = {
-					path: '/',
-					query: { redirect: to.name }
+				if (to.name !== "Logout") {
+					localStorage.setItem("redirect", to.name.toLowerCase())
 				}
-				if (to.name === "Logout") {
-					delete n.query
-				}
-				next(n)
+				next({
+					path: '/login'
+				})
 			} else {
 				next()
 			}

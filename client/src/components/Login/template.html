@@ -1,6 +1,6 @@
-<div>
+<div v-if="display" ref="container">
 	<b-container>
-		<b-row id="login">
+		<b-row>
 			<b-col>
 				<div id="auth" v-if="!$store.state.login">
 					<button class="btn btn-success" v-on:click="login('Google')">{{ $t("login.google") }}</button><br><br>

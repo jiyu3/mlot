@@ -7,9 +7,8 @@
 export default {
 	data() {
 		return {
-			loading: true,
-			email: "loading...",
-			bitcoin_addr: "loading..."
+			email: null,
+			bitcoin_addr: null
 		}
 	},
 	methods: {
@@ -32,11 +31,13 @@ export default {
 		}
 	},
 	mounted() {
+		let loader = this.$loading.show()
+
 		this.rpc("user", "get", { token: this.$store.state.token }).then(r => {
 			this.email = r.email
 			this.bitcoin_addr = r.bitcoin_addr
 		}).finally(() => {
-			this.loading = false
+			loader.hide()
 		})
 	}
 }
