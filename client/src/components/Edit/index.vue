@@ -8,10 +8,18 @@ export default {
 	data() {
 		return {
 			email: null,
-			bitcoin_addr: null
+			bitcoin_addr: null,
+			unko: true,
+			tinko: true
 		}
 	},
 	methods: {
+		toggleUnko() {
+			this.unko = !this.unko
+		},
+		toggleTinko() {
+			this.tinko = !this.tinko
+		},
 		edit() {
 			this.rpc("user", "edit",
 				{ email: this.email, bitcoin_addr: this.bitcoin_addr, token: this.$store.state.token }
@@ -34,6 +42,9 @@ export default {
 		let loader = this.$loading.show()
 
 		this.rpc("user", "get", { token: this.$store.state.token }).then(r => {
+			if(r.email && r.bitcoin_addr) {
+
+			}
 			this.email = r.email
 			this.bitcoin_addr = r.bitcoin_addr
 		}).finally(() => {

@@ -4,6 +4,7 @@
 			<router-link class="btn" to="/edit" v-if="$store.state.login">Edit</router-link>
 			<router-link class="btn" to="/lot" v-if="$store.state.login">Lot</router-link>
 			<router-link class="btn" to="/result" v-if="$store.state.login">Result</router-link>
+			<router-link class="btn" to="/terms" v-if="$store.state.login">Terms</router-link>
 		</header>
 		<router-view/>
 		<footer>
@@ -64,5 +65,9 @@ header a:not(:last-child) {
 
 footer a {
 	background-color: white;
+}
+
+h3 {
+	margin-bottom: 20px;
 }
 </style>

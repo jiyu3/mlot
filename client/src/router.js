@@ -42,6 +42,12 @@ export default new Router({
 			name: 'Result',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Result/index.vue')
+		},
+		{
+			path: '/terms',
+			name: 'Terms',
+			// lazy load
+			component: () => import(/* webpackChunkName: "about" */ './components/Terms/index.vue')
 		}
 	]
 })

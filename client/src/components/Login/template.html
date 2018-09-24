@@ -2,13 +2,13 @@
 	<b-container>
 		<b-row>
 			<b-col>
-				<div id="auth" v-if="!$store.state.login">
+				<div>
 					<button class="btn btn-success" v-on:click="login('Google')">{{ $t("login.google") }}</button><br><br>
 				</div>
-				<div id="auth" v-if="!$store.state.login">
+				<div>
 					<button class="btn btn-success" v-on:click="login('Twitter')">{{ $t("login.twitter") }}</button><br><br>
 				</div>
-				<div id="auth" v-if="!$store.state.login">
+				<div>
 					<input type="email" v-model="email">
 					<button class="btn btn-success" v-on:click="sendEmailLink()">{{ $t("login.email") }}</button><br><br>
 				</div>
