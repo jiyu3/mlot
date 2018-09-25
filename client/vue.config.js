@@ -9,7 +9,7 @@ module.exports = {
 	},
 	devServer: {
 		port: 8100,
-		https: true,
+		https: false,
 		watchOptions: {
 			poll: true
 		}

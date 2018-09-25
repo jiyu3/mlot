@@ -1,0 +1,23 @@
+{
+	"short_name": "glot",
+	"name": "Green Lot",
+	"icons": [
+		{
+			"src": "/images/icons-192.png",
+			"type": "image/jpg",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/images/icons-512.png",
+			"type": "image/jpg",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/",
+	"background_color": "green",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "green",
+	"orientation": "portrait",
+	"gcm_sender_id": "103953800507"
+}
