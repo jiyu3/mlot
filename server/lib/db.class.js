@@ -6,8 +6,11 @@ module.exports = class DB {
 		this.db.connect()
 	}
 
-	select(table, value, where) {
-		let query = `SELECT ${value} FROM ${table} WHERE ${where}`
+	select(table, value, where = "1", others) {
+		let query = `SELECT ${value} FROM ${table} WHERE ${where} `
+		if (others) {
+			query += others
+		}
 		return this._q(query)
 	}
 

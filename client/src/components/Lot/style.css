@@ -1,0 +1,17 @@
+li {
+	list-style: none;
+}
+
+#btn-notify {
+	display: inline-block !important;
+}
+
+#deposit_addr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+#prize {
+	margin-top: 20px;
+}

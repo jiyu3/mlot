@@ -1,8 +1,31 @@
 <div>
-	<b-container>
+	<b-container v-show="loaded">
 		<b-row>
 			<b-col>
+				<div v-if="lot">
+					<p>現在購入可能なくじは以下です。</p>
+					<div>
+						<div>開始: {{ lot.start }}</div>
+						<div>終了: {{ lot.end }}</div>
+						<div id="prize">
+							賞金は以下の通りです。<br>
+							１等：総入金額の50%<br>
+							２等：総入金額の20%<br>
+							３等：総入金額の15%<br>
+							４等：総入金額の10%<br>
+							５等：総入金額の5%<br>
+						</div>
+						<div id="deposit_addr">今回のくじを申し込む方は、以下のアドレスに入金してください。
+							<a :href="bitcoin_link">{{ deposit_addr }}</a>
+						</div>
+					</div>
+				</div>
+				<div v-else>現在購入可能なくじはありません。</div>
 
+				<div>
+					<p>当選結果の通知を希望する場合は、以下のボタンをクリックして通知を許可する設定にしてください。</p>
+					<div ref="notify"></div>
+				</div>
 			</b-col>
 		</b-row>
 	</b-container>

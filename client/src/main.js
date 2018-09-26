@@ -23,76 +23,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
 
-/* Firebase Setting */
-import firebase from 'firebase'
-
-let config = {
-	apiKey: "AIzaSyAh6SK0vE-jM0-gNxolT_wXvL9RX6-8YrM",
-	authDomain: "glot-ddc71.firebaseapp.com",
-	databaseURL: "https://glot-ddc71.firebaseio.com",
-	projectId: "glot-ddc71",
-	storageBucket: "glot-ddc71.appspot.com",
-	messagingSenderId: "305423916799"
-};
-firebase.initializeApp(config);
-/* Firebase Setting */
-
-/* Push Notification */
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('./firebase-messaging-sw.js').then(r => {
-		console.log('Registration successful, scope is:', r.scope)
-	}).catch(e => {
-		console.log('Service worker registration failed, error:', e)
-	});
-}
-
-const messaging = firebase.messaging()
-messaging.usePublicVapidKey("BJtOm5o2EwRNcdJjp6wHIvPIvGOnaXhO6992c2lCWMQ4NBSQCk1tUMzZmH1ce_SHTo9bKeh4GA51oeDe83BF8sA")
-
-// Callback fired if Instance ID token is updated.
-messaging.onTokenRefresh(function () {
-	messaging.getToken().then(function (refreshedToken) {
-		console.log('Token refreshed.');
-		// Indicate that the new Instance ID token has not yet been sent to the
-		// app server.
-		setTokenSentToServer(false);
-		// Send Instance ID token to app server.
-		sendTokenToServer(refreshedToken);
-		// ...
-	}).catch(function (err) {
-		console.log('Unable to retrieve refreshed token ', err);
-		showToken('Unable to retrieve refreshed token ', err);
-	});
-});
-/* Push Notification */
-
 Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
-		async askForNotification() {
-			try {
-				await messaging.requestPermission();
-				const token = await messaging.getToken();
-				if (token) {
-					// sendTokenToServer(currentToken);
-					// updateUIForPushEnabled(currentToken);
-					console.log('Notification permission granted.', token);
-				} else {
-					// Show permission request.
-					console.log('No Instance ID token available. Request permission to generate one.');
-					// Show permission UI.
-					// updateUIForPushPermissionRequired();
-					// setTokenSentToServer(false);
-				}
-			} catch (e) {
-				// console.log('An error occurred while retrieving token. ', e);
-				// showToken('Error retrieving Instance ID token. ', e);
-				// setTokenSentToServer(false);
-			}
-		},
-
-		rpc(table, method, params, loading_overlay = false) {
+		rpc(table, method, params = null, loading_overlay = false) {
 			let url = this.$store.getters.db_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
@@ -135,39 +70,6 @@ Vue.mixin({
 			})
 		}
 	}
-})
-
-router.beforeEach((to, from, next) => {
-	let skipAuth = to.matched.some(record => record.meta.skipAuth)
-	firebase.auth().onAuthStateChanged(function (user) {
-		if (user && !store.state.login) {
-			firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-				store.commit("login", token)
-			})
-		} else if (!user && store.state.login) {
-			store.commit("logout")
-		}
-		if (!skipAuth) {
-			if (!user) {
-				if (to.name !== "Logout") {
-					localStorage.setItem("redirect", to.name.toLowerCase())
-				}
-				next({
-					path: '/login'
-				})
-			} else {
-				next()
-			}
-		} else {
-			if (user) {
-				next({
-					path: `/${store.state.redirect_default}`
-				})
-			} else {
-				next()
-			}
-		}
-	})
 })
 
 new Vue({
