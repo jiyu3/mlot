@@ -23,6 +23,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
 
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
 Vue.config.productionTip = false
 
 Vue.mixin({

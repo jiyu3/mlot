@@ -12,12 +12,8 @@ export default {
 			lot: null,
 			deposit_addr: deposit_addr,
 			bitcoin_link: `bitcoin:${deposit_addr}`,
+			copy: "Copy address to clipboard",
 			loaded: false
-		}
-	},
-	watch: {
-		"this.$route"() {
-			alert("going!")
 		}
 	},
 	methods: {
@@ -39,6 +35,21 @@ export default {
 			} else if(lang === "en") {
 				return `${w[day]} ${m}/${date} ${h}:${min}`
 			}
+		},
+		onCopy() {
+			let toast = this.$toasted.show("Copied!", {
+				theme: "bubble",
+				position: "bottom-center",
+				duration : 1500
+			})
+			this.copy = "Copied!"
+		},
+		onCopyError() {
+			let toast = this.$toasted.show("Failed", {
+				theme: "outline",
+				position: "bottom-center",
+				duration : 1500
+			})
 		}
 	},
 	mounted() {
