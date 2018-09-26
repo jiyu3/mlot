@@ -1,19 +1,25 @@
 <template>
 	<div id="app">
 		<header>
-			<router-link class="btn" to="/edit">Edit</router-link>
-			<router-link class="btn" to="/lot">Lot</router-link>
-			<router-link class="btn" to="/result">Result</router-link>
-			<router-link class="btn" to="/terms">Terms</router-link>
+			<router-link class="logo" to="/"><img :src="logo"></router-link>
+			<router-link class="btn" to="/lot">Buy Lot</router-link>
+			<router-link class="btn" to="/result">See Result</router-link>
 		</header>
-		<router-view/>
+		<router-view id="main" />
+		<div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div>
 		<footer>
+			<router-link class="btn back" to="/lot">Top</router-link>
 		</footer>
 	</div>
 </template>
 
 <script>
 export default {
+	data() {
+		return {
+			logo: require("./images/logo.png")
+		}
+	},
 	methods: {
 	},
 	mounted() {
@@ -22,13 +28,40 @@ export default {
 </script>
 
 <style>
-html, #app {
-	background: #e1fae1;
+html, #app, img, .logo, header {
+	background-color: #e1fae1 !important;
 	font-size: 18px;
 }
 
+.btn-success {
+	color: white !important;
+}
+
+.row {
+	margin-top: 20px;
+}
+
+.row:last-child {
+	margin-bottom: 20px;
+}
+
+.back {
+	margin-bottom: 20px;
+	border: 1px solid green !important;
+}
+
+.logo img {
+	height: 40px;
+}
+
+#btn-notify {
+	display: none;
+}
+
 html a {
+	background: white;
 	color: green;
+	font-weight: bold !important;
 }
 
 html a:visited {
@@ -52,6 +85,7 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 9999;
 }
 
 
