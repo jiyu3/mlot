@@ -15,13 +15,20 @@
 							４等：総入金額の10%<br>
 							５等：総入金額の5%<br>
 						</div>
-						<div id="deposit_addr">今回のくじを申し込む方は、以下のアドレスに入金してください。
-							<a :href="bitcoin_link">{{ deposit_addr }}</a>
+						<div id="deposit_addr">今回のくじを申し込む方は、以下のアドレスにビットコインを入金してください。
+							<a :href="bitcoin_link" v-model="deposit_addr" >{{ deposit_addr }}</a>
+							<button class="copy btn btn-success" v-clipboard:copy="deposit_addr"
+								v-clipboard:success="onCopy"
+								v-clipboard:error="onCopyError">{{ copy }}</button>
+							</button>
 						</div>
 					</div>
 				</div>
 				<div v-else>現在購入可能なくじはありません。</div>
-
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col>
 				<div>
 					<p>当選結果の通知を希望する場合は、以下のボタンをクリックして通知を許可する設定にしてください。</p>
 					<div ref="notify"></div>

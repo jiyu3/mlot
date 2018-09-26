@@ -8,7 +8,7 @@
 		<router-view id="main" />
 		<div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div>
 		<footer>
-			<router-link class="btn back" to="/lot">Top</router-link>
+			<router-link v-show="$route.path != '/'" class="btn back" to="/">Top</router-link>
 		</footer>
 	</div>
 </template>
@@ -58,7 +58,7 @@ html, #app, img, .logo, header {
 	display: none;
 }
 
-html a {
+#main a:not(.btn) {
 	background: white;
 	color: green;
 	font-weight: bold !important;
