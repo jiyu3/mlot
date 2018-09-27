@@ -1,30 +1,39 @@
 {
-	"sales": "ビットコインで宝くじが買える！",
+	"sales": "Buy lottery with bitcoin!",
+	"header": {
+		"buy": "Buy Lot",
+		"result": "See Result"
+	},
 	"home": {
-		"description": "GLotとは？",
-		"description_content": "Glot とは、ビットコインで宝くじが購入できるサイトです。通常の宝くじでは不可能な高い還元率で、多くの収益が得られる可能性があります。",
-		"usage": "利用方法",
-		"usage_content": "上記の\"Buy Lot\"というボタンから宝くじのページに移動し、指定のアドレスにビットコインを払い込めばくじが購入できます。くじの募集期間が終わったら上記の\"See Result\"というボタンから当選結果ページに移動し、当否を確認してください。",
-		"lot_method": "抽選方法",
-		"lot_method_content": "当選者は抽選で選ばれますが、払込の額が高ければ高いほど当選確率はあがります。値段はいくらからでも申し込めるので、無理のない金額でくじを購入することが可能です。なお、公正さを維持するため、当選確率の計算式は公表していません。",
+		"description": "What is GLot",
+		"description_content": "GLot is the web app that you can buy lottery with bitcoin. The reduction rate is much higher than fiat-base one, so you may be able to get much more benefit.",
+		"usage": "Usage",
+		"usage_content": "Click \"Buy Lot\" button on header, go to lottery page, and pay bitcoin to designated address, then you finish to buy lottery. After the recruitment period of lottery, click \"See Result\" to see resutl.",
+		"lot_method": "Lottery method",
+		"lot_method_content": "People who pay more are more likely to become winners. You can pay however much you want. We don't publish how to compute winners in order to be fair.",
 		"buy": "くじを購入する"
 	},
 	"lot": {
-		"description": "現在購入可能なくじは以下です。",
-		"start": "開始",
-		"end": "終了",
-		"prize_description": "賞金は以下の通りです。",
-		"prize1": "１等：総入金額の50%",
-		"prize2": "２等：総入金額の20%",
-		"prize3": "３等：総入金額の15%",
-		"prize4": "４等：総入金額の10%",
-		"prize5": "５等：総入金額の5%",
-		"deposit": "くじを購入される方は、以下のアドレスにビットコインを入金してください。",
-		"none": "現在購入可能なくじはありません。",
-		"notify": "当選結果の通知を希望する場合は、以下のボタンをクリックして通知を許可する設定にしてください。"
+		"description": "The detail of current lottery is as below.",
+		"start": "Start",
+		"end": "End",
+		"prize_description": "Prize is as below.",
+		"prize1": "1st: 50% of total deposit amount",
+		"prize2": "2nd: 20% of total deposit amount",
+		"prize3": "3rd: 15% of total deposit amount",
+		"prize4": "4th: 10% of total deposit amount",
+		"prize5": "5th: 5% of total deposit amount",
+		"deposit": "If you want to buy lottery, send bitcoin to below address.",
+		"none": "There is no lottery available.",
+		"notify": "If you need notification of result, click the below button and allow notification."
 	},
 	"result": {
-		"description": "第１回の当選結果は、以下の通りになりました。",
-		"prize": "賞金額は以下の通りです。"
+		"description": "The winners of 1st lottery are as below.",
+		"1st": "1st",
+		"2nd": "2nd",
+		"3rd": "3rd",
+		"4th": "4th",
+		"5th": "5th",
+		"prize": "The prize of each winner is as below."
 	}
 }

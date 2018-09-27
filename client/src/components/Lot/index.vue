@@ -27,7 +27,6 @@ export default {
 			if(lang === "zh-tw") {
 			} else if(lang === "zh-cn") {
 			} else if(lang === "ja") {
-				console.log("ja")
 				return `${m}月${date}日(${w[day]}) ${h}時${min}分`
 			} else if(lang === "en") {
 				return `${w[day]} ${m}/${date} ${h}:${min}`
@@ -60,13 +59,6 @@ export default {
 			this.loaded = true
 		})
 
-		// if(this.$refs["btn-notify"]) {
-		// 	this.$refs["btn-notify"].remove()
-		// }
-		// let child = document.createElement("div")
-		// child.classList.add('onesignal-customlink-container')
-		// child.setAttribute("ref", "btn-notify")
-		// this.$refs.notify.appendChild(child)
 		let child = this.$parent.$refs["btn-notify"]
 		this.$refs.notify.appendChild(child)
 	}
