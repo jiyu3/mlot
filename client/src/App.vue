@@ -1,14 +1,35 @@
 <template>
 	<div id="app">
 		<header>
-			<router-link class="logo" to="/"><img :src="logo"></router-link>
-			<router-link class="btn" to="/lot">Buy Lot</router-link>
-			<router-link class="btn" to="/result">See Result</router-link>
+			<div>
+				<router-link class="logo" to="/"><img :src="logo"></router-link>
+				<router-link class="btn" to="/lot">Buy Lot</router-link>
+				<router-link class="btn" to="/result">See Result</router-link>
+			</div>
 		</header>
 		<router-view id="main" />
 		<div ref="btn-notify" id="btn-notify" class="onesignal-customlink-container"></div>
 		<footer>
-			<router-link v-show="$route.path != '/'" class="btn back" to="/">Top</router-link>
+			<div class="sns">
+				<a :href="twitter_link" target="_blank" title="Share on Twitter">
+					<img :src="twitter" class="twitter" alt="twitter">
+				</a>
+				<a :href="facebook_link" target="_blank" title="Share on Facebook">
+					<img :src="facebook" class="facebook" alt="facebook">
+				</a>
+			</div>
+			<div class="to_top" >
+				<router-link class="btn" v-show="$route.path != '/'" to="/">Back to Top</router-link>
+			</div>
+			<div id="locale">
+				<a href="javascript:void(0)" @click="locale = 'zhtw'">繁體中文</a>
+				<a href="javascript:void(0)" @click="locale = 'zhcn'">简体中文</a>
+				<a href="javascript:void(0)" @click="locale = 'ja'">日本語</a>
+				<a href="javascript:void(0)" @click="locale = 'en'">English</a>
+			</div>
+			<div id="contact">
+				<a href="https://twitter.com/mylotgreen" target="_blank">Contact</a>
+			</div>
 		</footer>
 	</div>
 </template>
@@ -16,13 +37,56 @@
 <script>
 export default {
 	data() {
+		let locale = localStorage.getItem("locale") ? localStorage.getItem("locale") : null
+		if(!locale) {
+			let language = (window.navigator.languages && window.navigator.languages[0]) ||
+				window.navigator.language ||
+				window.navigator.userLanguage ||
+				window.navigator.browserLanguage;
+			if(language.startsWith("en")) {
+				locale = "en"
+			} else if(language.startsWith("ja")) {
+				locale = "ja"
+			} else if(language.startsWith("zh-cn")) {
+				locale = "zhcn"
+			} else {
+				locale = "zhtw"
+			}
+		}
+		this.$i18n.locale = locale
+
 		return {
-			logo: require("./images/logo.png")
+			locale: locale,
+			logo: require("./images/logo.png"),
+			twitter: require("./images/twitter.png"),
+			facebook: require("./images/facebook.png"),
+			twitter_link: null,
+			facebook_link: null
+		}
+	},
+	watch: {
+		locale(v) {
+			this.$i18n.locale = v
+			localStorage.setItem("locale", v)
 		}
 	},
 	methods: {
+		getLink(type) {
+			let description = this.$i18n.messages[this.locale].sales
+			let url = location.origin
+
+			if(type === "twitter") {
+				return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(description + "\n" + url + "\n" + " #glot #bitcoin #ビットコイン #仮想通貨 #比特幣 #虛擬貨幣")
+			} else if (type === "facebook") {
+				return "https://www.facebook.com/sharer/sharer.php?u=" + url + "&t=" + encodeURIComponent(description)
+			} else {
+				return false
+			}
+		},
 	},
 	mounted() {
+		this.twitter_link = this.getLink("twitter")
+		this.facebook_link = this.getLink("facebook")
 	}
 }
 </script>
@@ -59,13 +123,26 @@ html, #app, img, .logo, header {
 }
 
 #main a:not(.btn) {
-	background: white;
+	background-color: white;
 	color: green;
 	font-weight: bold !important;
 }
 
 html a:visited {
 	color: darkgreen;
+}
+
+#locale {
+	margin-bottom: 20px;
+}
+
+footer a, footer a:hover {
+	color: green;
+	font-weight: bold !important;
+}
+
+footer a:not(:first-child) {
+	margin-left: 5px;
 }
 
 #app {
@@ -88,20 +165,58 @@ header {
 	z-index: 9999;
 }
 
-
 header a:hover, header .router-link-exact-active {
 	background-color: white;
 }
 
-header a:not(:last-child) {
-	margin-right: 10px;
+header > div {
+	width: 100%;
+	max-width: 750px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-footer a {
-	background-color: white;
+header .btn {
+	margin-left: 2%;
+}
+
+footer {
+	margin-top: 50px;
+	border-top: 1px solid darkgreen;
 }
 
 h3 {
+	margin-bottom: 20px;
+}
+
+.twitter {
+	width: 10%;
+	margin-right: 10px;
+}
+
+.facebook {
+	width: 10%;
+	margin-left: 10px;
+}
+
+.sns {
+	margin-top: 20px;
+}
+
+.to_top {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.to_top .btn {
+	background-color: white;
+	border: 1px solid green;
+}
+
+#contact {
+	font-size: 14px;
 	margin-bottom: 20px;
 }
 </style>

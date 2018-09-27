@@ -20,6 +20,10 @@ li {
 	margin-top: 10px;
 }
 
+#balance {
+	margin-top: 20px;
+}
+
 /* Vue Toast start */
 .toasted.bubble {
 	background-color: limegreen;
