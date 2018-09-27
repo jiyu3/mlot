@@ -7,7 +7,8 @@ export default {
 		return {
 			result: null,
 			loaded: false,
-			unit: null
+			unit: null,
+			display: true
 		}
 	},
 	methods: {

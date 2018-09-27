@@ -3,8 +3,8 @@
 		<header>
 			<div>
 				<router-link class="logo" to="/"><img :src="logo"></router-link>
-				<router-link class="btn" to="/lot">Buy Lot</router-link>
-				<router-link class="btn" to="/result">See Result</router-link>
+				<router-link class="btn" to="/lot">{{ $t("header.buy") }}</router-link>
+				<router-link class="btn" to="/result">{{ $t("header.result") }}</router-link>
 			</div>
 		</header>
 		<router-view id="main" />
