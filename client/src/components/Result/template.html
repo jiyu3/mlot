@@ -2,7 +2,7 @@
 	<b-container v-if="loaded">
 		<b-row id="addr">
 			<b-col>
-				<p>第 n 回の当選結果は、以下の通りになりました。</p>
+				<p>{{ $t("result.description") }}</p>
 				<div>
 					<div v-if="result.addr1">１等<br> {{ result.addr1 }}</div>
 					<div v-if="result.addr2">２等<br> {{ result.addr2 }}</div>
@@ -15,7 +15,7 @@
 
 		<b-row id="prize">
 			<b-col>
-				<p>賞金額は以下の通りです。</p>
+				<p>{{ $t("result.prize") }}</p>
 				<div>
 					<div v-if="result.prize1">１等: {{ result.prize1 | satoshiTomBTC }} {{ unit }}</div>
 					<div v-if="result.prize2">２等: {{ result.prize2 | satoshiTomBTC }} {{ unit }}</div>

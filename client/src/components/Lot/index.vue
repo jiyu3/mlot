@@ -4,14 +4,11 @@
 <script>
 export default {
 	data() {
-		let deposit_addr = "2N7kV6frZatpmjJsuoEdVqsmhhEmX6jA7Bi"
-		if(process.env.NODE_ENV === "production") {
-			deposit_addr = "38LThaF8ohTk2Ji4H2MX5qfxT7QpiSN1oT"
-		}
 		return {
 			lot: null,
-			deposit_addr: deposit_addr,
-			bitcoin_link: `bitcoin:${deposit_addr}`,
+			deposit_addr: this.$store.getters.deposit_addr,
+			bitcoin_link: `bitcoin:${this.$store.getters.deposit_addr}`,
+			balance_link: this.$store.getters.balance_link,
 			copy: "Copy address to clipboard",
 			loaded: false
 		}

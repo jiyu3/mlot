@@ -3,34 +3,38 @@
 		<b-row>
 			<b-col>
 				<div v-if="lot">
-					<p>現在購入可能なくじは以下です。</p>
+					<p>{{ $t("lot.description") }}</p>
 					<div>
-						<div>開始: {{ lot.start }}</div>
-						<div>終了: {{ lot.end }}</div>
+						<div>{{ $t("lot.start") }}: {{ lot.start }}</div>
+						<div>{{ $t("lot.end") }}: {{ lot.end }}</div>
 						<div id="prize">
-							賞金は以下の通りです。<br>
-							１等：総入金額の50%<br>
-							２等：総入金額の20%<br>
-							３等：総入金額の15%<br>
-							４等：総入金額の10%<br>
-							５等：総入金額の5%<br>
+							{{ $t("lot.prize_description") }}<br>
+							{{ $t("lot.prize1") }}<br>
+							{{ $t("lot.prize2") }}<br>
+							{{ $t("lot.prize3") }}<br>
+							{{ $t("lot.prize4") }}<br>
+							{{ $t("lot.prize5") }}
 						</div>
-						<div id="deposit_addr">今回のくじを申し込む方は、以下のアドレスにビットコインを入金してください。
+						<div id="deposit_addr"> {{ $t("lot.deposit") }}
 							<a :href="bitcoin_link" v-model="deposit_addr" >{{ deposit_addr }}</a>
 							<button class="copy btn btn-success" v-clipboard:copy="deposit_addr"
 								v-clipboard:success="onCopy"
 								v-clipboard:error="onCopyError">{{ copy }}</button>
 							</button>
 						</div>
+						<div id="balance">
+							現在どれぐらいの金額が集まっているかは、以下のURLからわかります。<br>
+							<a :href="balance_link" target="_blank">blockchain.info</a>
+						</div>
 					</div>
 				</div>
-				<div v-else>現在購入可能なくじはありません。</div>
+				<div v-else>{{ $t("lot.none") }}</div>
 			</b-col>
 		</b-row>
 		<b-row>
 			<b-col>
 				<div>
-					<p>当選結果の通知を希望する場合は、以下のボタンをクリックして通知を許可する設定にしてください。</p>
+					<p>{{ $t("lot.notify") }}</p>
 					<div ref="notify"></div>
 				</div>
 			</b-col>

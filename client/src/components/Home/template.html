@@ -2,35 +2,31 @@
 	<b-container>
 		<b-row>
 			<b-col>
-				<h3>GLot とは？</h3>
+				<h3>{{ $t("home.description") }}</h3>
 				<div>
-					Glot とは、ビットコインで宝くじが購入できるサイトです。
-					通常の宝くじでは不可能な高い還元率で、多くの収益が得られる可能性があります。
+					{{ $t("home.description_content") }}
 				</div>
 			</b-col>
 		</b-row>
 		<b-row>
 			<b-col>
-				<h3>利用方法</h3>
+				<h3>{{ $t("home.usage") }}</h3>
 				<div>
-					<router-link to="/lot">宝くじのページ</router-link>に移動して、指定されたアドレスにビットコインを払い込めばくじが購入できます。
-					くじの募集期間が終わったら<router-link to="/result">当選者発表のページ</router-link>に表示されるので、当否を確認してください。
+					{{ $t("home.usage_content") }}
 				</div>
 			</b-col>
 		</b-row>
 		<b-row>
 			<b-col>
-				<h3>抽選方法</h3>
+				<h3>{{ $t("home.lot_method") }}</h3>
 				<div>
-					当選者は抽選で選ばれますが、払込の額が高ければ高いほど当選確率はあがります。
-					値段はいくらからでも申し込めるので、無理のない金額でくじを購入することが可能です。
-					なお、公正さを維持するため、当選確率の計算式は公表していません。
+
 				</div>
 			</b-col>
 		</b-row>
 		<b-row id="buy_lot">
 			<b-col>
-				<router-link class="btn btn-success" to="/lot">くじを購入する</router-link>
+				<router-link class="btn btn-success" to="/lot">{{ $t("home.buy") }}</router-link>
 			</b-col>
 		</b-row>
 	</b-container>

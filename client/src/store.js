@@ -13,6 +13,16 @@ export default new Vuex.Store({
 	getters: {
 		db_url(state) {
 			return state.config[process.env.NODE_ENV].db.base_url
+		},
+		deposit_addr(state) {
+			return state.config[process.env.NODE_ENV].deposit_addr
+		},
+		balance_link(state) {
+			if (process.env.NODE_ENV === "production") {
+				return `https://www.blockchain.com/btc/address/${state.config[process.env.NODE_ENV].deposit_addr}`
+			} else {
+				return `https://testnet.blockchain.info/address/${state.config[process.env.NODE_ENV].deposit_addr}`
+			}
 		}
 	},
 	actions: {
