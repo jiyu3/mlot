@@ -15,23 +15,6 @@ export default new Router({
 			meta: { skipAuth: true }
 		},
 		{
-			path: '/login',
-			name: 'Login',
-			component: () => import(/* webpackChunkName: "about" */ './components/Login/index.vue'),
-			meta: { skipAuth: true }
-		},
-		{
-			path: '/logout',
-			name: 'Logout',
-			component: () => import(/* webpackChunkName: "about" */ './components/Logout/index.vue'),
-		},
-		{
-			path: '/edit',
-			name: 'Edit',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/Edit/index.vue')
-		},
-		{
 			path: '/lot',
 			name: 'Lot',
 			// lazy load
@@ -42,12 +25,6 @@ export default new Router({
 			name: 'Result',
 			// lazy load
 			component: () => import(/* webpackChunkName: "about" */ './components/Result/index.vue')
-		},
-		{
-			path: '/terms',
-			name: 'Terms',
-			// lazy load
-			component: () => import(/* webpackChunkName: "about" */ './components/Terms/index.vue')
 		}
 	]
 })

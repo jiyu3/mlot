@@ -1,8 +1,42 @@
 <div>
-	<b-container>
+	<b-container v-show="loaded">
 		<b-row>
 			<b-col>
-
+				<div v-if="lot">
+					<p>{{ $t("lot.description") }}</p>
+					<div>
+						<div>{{ $t("lot.start") }}: {{ lot.start }}</div>
+						<div>{{ $t("lot.end") }}: {{ lot.end }}</div>
+						<div id="prize">
+							{{ $t("lot.prize_description") }}<br>
+							{{ $t("lot.prize1") }}<br>
+							{{ $t("lot.prize2") }}<br>
+							{{ $t("lot.prize3") }}<br>
+							{{ $t("lot.prize4") }}<br>
+							{{ $t("lot.prize5") }}
+						</div>
+						<div id="deposit_addr"> {{ $t("lot.deposit") }}
+							<a :href="bitcoin_link" v-model="deposit_addr" >{{ deposit_addr }}</a><br>
+							<button class="copy btn btn-success" v-clipboard:copy="deposit_addr"
+								v-clipboard:success="onCopy"
+								v-clipboard:error="onCopyError">{{ copy }}</button>
+							</button>
+						</div>
+						<div id="balance">
+							現在どれぐらいの金額が集まっているかは、以下のURLからわかります。<br>
+							<a :href="balance_link" target="_blank">blockchain.info</a>
+						</div>
+					</div>
+				</div>
+				<div v-else>{{ $t("lot.none") }}</div>
+			</b-col>
+		</b-row>
+		<b-row>
+			<b-col>
+				<div>
+					<p>{{ $t("lot.notify") }}</p>
+					<div ref="notify"></div>
+				</div>
 			</b-col>
 		</b-row>
 	</b-container>

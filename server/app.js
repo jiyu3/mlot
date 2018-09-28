@@ -6,6 +6,7 @@ let express = require('express')
 let path = require('path')
 let cookieParser = require('cookie-parser')
 let logger = require('morgan')
+let cors = require('cors')
 
 let userRouter = require('./routes/user')
 let lotRouter = require('./routes/lot')
@@ -13,19 +14,23 @@ let resultRouter = require('./routes/result')
 
 let app = express()
 
+let whitelist = ['http://localhost:8100', 'https://mylot.green']
+let corsOptions = {
+	origin: function (origin, callback) {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true)
+		} else {
+			callback(new Error('Not allowed by CORS'))
+		}
+	}
+}
+app.use(cors(corsOptions))
+
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-
-
-// TODO: set cors before production
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
 
 app.use('/user', userRouter)
 app.use('/lot', lotRouter)
@@ -44,8 +49,7 @@ app.use(function(err, req, res, next) {
 
 	// render the error page
 	res.status(err.status || 500)
-	console.log(err)
-	res.send(err) // todo: エラーを直接出力しないようにする
+	res.send("error")
 })
 
 module.exports = app

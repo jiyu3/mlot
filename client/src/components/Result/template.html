@@ -1,3 +1,35 @@
 <div>
-	I'm in Result!
+	<b-container v-if="loaded">
+		<b-row id="addr">
+			<b-col>
+				<p>{{ $t("result.description") }}</p>
+				<div>
+					<div v-if="result.addr1">{{ $t("result.1st") }}<br> {{ result.addr1 }}</div>
+					<div v-if="result.addr2">{{ $t("result.2nd") }}<br> {{ result.addr2 }}</div>
+					<div v-if="result.addr3">{{ $t("result.3rd") }}<br> {{ result.addr3 }}</div>
+					<div v-if="result.addr4">{{ $t("result.4th") }}<br> {{ result.addr4 }}</div>
+					<div v-if="result.addr5">{{ $t("result.5th") }}<br> {{ result.addr5 }}</div>
+				</div>
+			</b-col>
+		</b-row>
+
+		<b-row id="prize">
+			<b-col>
+				<p>{{ $t("result.prize") }}</p>
+				<div>
+					<div v-if="result.prize1">{{ $t("result.1st") }}: {{ result.prize1 | satoshiTomBTC }} {{ unit }}</div>
+					<div v-if="result.prize2">{{ $t("result.2nd") }}: {{ result.prize2 | satoshiTomBTC }} {{ unit }}</div>
+					<div v-if="result.prize3">{{ $t("result.1rd") }}: {{ result.prize3 | satoshiTomBTC }} {{ unit }}</div>
+					<div v-if="result.prize4">{{ $t("result.4th") }}: {{ result.prize4 | satoshiTomBTC }} {{ unit }}</div>
+					<div v-if="result.prize5">{{ $t("result.5th") }}: {{ result.prize5 | satoshiTomBTC }} {{ unit }}</div>
+				</div>
+			</b-col>
+		</b-row>
+
+		<b-row v-if="!result.addr == void 0">
+			<b-col>
+				{{ $t("result.none") }}
+			</b-col>
+		</b-row>
+	</b-container>
 </div>
