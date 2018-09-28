@@ -178,6 +178,22 @@ header > div {
 	justify-content: center;
 }
 
+header a {
+	color:green;
+}
+
+header a:hover {
+	color: green;
+}
+
+header a:active {
+	color: green;
+}
+
+header a:visited {
+	color: darkgreen;
+}
+
 header .btn {
 	margin-left: 2%;
 }
