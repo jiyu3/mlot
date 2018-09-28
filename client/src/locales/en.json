@@ -34,6 +34,7 @@
 		"3rd": "3rd",
 		"4th": "4th",
 		"5th": "5th",
-		"prize": "The prize of each winner is as below."
+		"prize": "The prize of each winner is as below.",
+		"none": "There is no lottery result available."
 	}
 }

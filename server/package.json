@@ -12,6 +12,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "firebase-admin": "^6.0.0",
+    "greenlock-express": "^2.4.6",
     "hash.js": "^1.1.5",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",

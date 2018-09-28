@@ -40,9 +40,8 @@ Vue.mixin({
 			let error_count = 0
 			let interval = 100
 
-			let loader = null
 			if (loading_overlay) {
-				loader = this.$loading.show()
+				this.$store.state.loader = this.$loading.show()
 			}
 			return new Promise((resolve, reject) => {
 				let loop = setInterval(() => {
@@ -57,15 +56,14 @@ Vue.mixin({
 						}).catch(e => {
 							reject(e)
 						}).finally(r => {
-							if (loader != null) {
-								loader.hide()
+							if (this.$store.state.loader != null) {
+								this.$store.state.loader.hide()
 							}
 						})
 					} else {
-						if (++error_count >= (5000 / interval)) {
+						if (++error_count >= (3000 / interval)) {
 							clearInterval(loop)
-							alert("予期しないエラーが発生しました。ログインし直してください")
-							this.$router.push("/logout")
+							this.$router.push("/")
 						}
 						params.token = this.$store.state.token
 					}
@@ -73,6 +71,13 @@ Vue.mixin({
 			})
 		}
 	}
+})
+
+router.beforeEach((to, from, next) => {
+	if (store.state.loader != null) {
+		store.state.loader.hide()
+	}
+	next()
 })
 
 new Vue({

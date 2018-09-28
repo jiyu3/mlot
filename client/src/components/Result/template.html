@@ -1,4 +1,4 @@
-<div v-if="display">
+<div>
 	<b-container v-if="loaded">
 		<b-row id="addr">
 			<b-col>
@@ -23,6 +23,12 @@
 					<div v-if="result.prize4">{{ $t("result.4th") }}: {{ result.prize4 | satoshiTomBTC }} {{ unit }}</div>
 					<div v-if="result.prize5">{{ $t("result.5th") }}: {{ result.prize5 | satoshiTomBTC }} {{ unit }}</div>
 				</div>
+			</b-col>
+		</b-row>
+
+		<b-row v-if="!result.addr == void 0">
+			<b-col>
+				{{ $t("result.none") }}
 			</b-col>
 		</b-row>
 	</b-container>

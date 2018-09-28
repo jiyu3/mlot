@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		token: null,
-		config: require("./config.js")
+		config: require("./config.json"),
+		loader: null
 	},
 	mutations: {
 	},

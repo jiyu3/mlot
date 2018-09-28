@@ -16,7 +16,7 @@
 							{{ $t("lot.prize5") }}
 						</div>
 						<div id="deposit_addr"> {{ $t("lot.deposit") }}
-							<a :href="bitcoin_link" v-model="deposit_addr" >{{ deposit_addr }}</a>
+							<a :href="bitcoin_link" v-model="deposit_addr" >{{ deposit_addr }}</a><br>
 							<button class="copy btn btn-success" v-clipboard:copy="deposit_addr"
 								v-clipboard:success="onCopy"
 								v-clipboard:error="onCopyError">{{ copy }}</button>
