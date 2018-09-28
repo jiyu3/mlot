@@ -22,8 +22,8 @@
 				<router-link class="btn" v-show="$route.path != '/'" to="/">Back to Top</router-link>
 			</div>
 			<div id="locale">
-				<a href="javascript:void(0)" @click="locale = 'zhtw'">繁體中文</a>
-				<a href="javascript:void(0)" @click="locale = 'zhcn'">简体中文</a>
+				<a href="javascript:void(0)" @click="locale = 'zh-tw'">繁體中文</a>
+				<a href="javascript:void(0)" @click="locale = 'zh-cn'">简体中文</a>
 				<a href="javascript:void(0)" @click="locale = 'ja'">日本語</a>
 				<a href="javascript:void(0)" @click="locale = 'en'">English</a>
 			</div>
@@ -48,9 +48,9 @@ export default {
 			} else if(language.startsWith("ja")) {
 				locale = "ja"
 			} else if(language.startsWith("zh-cn")) {
-				locale = "zhcn"
+				locale = "zh-cn"
 			} else {
-				locale = "zhtw"
+				locale = "zh-tw"
 			}
 		}
 		this.$i18n.locale = locale

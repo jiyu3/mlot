@@ -14,7 +14,7 @@ let resultRouter = require('./routes/result')
 
 let app = express()
 
-let whitelist = ['http://localhost:8100', 'http://mylot.green']
+let whitelist = ['http://localhost:8100', 'https://mylot.green']
 let corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {
