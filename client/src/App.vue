@@ -178,12 +178,6 @@ header > div {
 	justify-content: center;
 }
 
-/*
-まだアクセスされたことがないリンク： green
-ホバーしたとき: green
-アクティブなとき: green
-すでに訪問したリンク: darkgreen
-*/
 header a {
 	color:green;
 }
