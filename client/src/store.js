@@ -5,27 +5,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		login: false,
-		redirect_default: "edit",
 		token: null,
-		config: require("./config.js")
+		config: require("./config.json"),
+		loader: null
 	},
 	mutations: {
-		login(state, token) {
-			state.login = true
-			state.token = token
-		},
-		logout(state) {
-			state.login = false
-			state.token = null
-		},
 	},
 	getters: {
 		db_url(state) {
 			return state.config[process.env.NODE_ENV].db.base_url
 		},
-		actionCodeSettings(state) {
-			return state.config[process.env.NODE_ENV].actionCodeSettings
+		deposit_addr(state) {
+			return state.config[process.env.NODE_ENV].deposit_addr
+		},
+		balance_link(state) {
+			if (process.env.NODE_ENV === "production") {
+				return `https://www.blockchain.com/btc/address/${state.config[process.env.NODE_ENV].deposit_addr}`
+			} else {
+				return `https://testnet.blockchain.info/address/${state.config[process.env.NODE_ENV].deposit_addr}`
+			}
 		}
 	},
 	actions: {

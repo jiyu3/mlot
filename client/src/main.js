@@ -23,25 +23,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
 
-/* Firebase Setting start */
-import firebase from 'firebase'
-
-let config = {
-	apiKey: "AIzaSyAh6SK0vE-jM0-gNxolT_wXvL9RX6-8YrM",
-	authDomain: "glot-ddc71.firebaseapp.com",
-	databaseURL: "https://glot-ddc71.firebaseio.com",
-	projectId: "glot-ddc71",
-	storageBucket: "glot-ddc71.appspot.com",
-	messagingSenderId: "305423916799"
-};
-firebase.initializeApp(config);
-/* Firebase Setting end */
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 Vue.config.productionTip = false
 
 Vue.mixin({
 	methods: {
-		rpc(table, method, params, loading_overlay = false) {
+		rpc(table, method, params = null, loading_overlay = false) {
 			let url = this.$store.getters.db_url + table + "/" + method
 			let data = {
 				jsonrpc: "2.0",
@@ -51,9 +40,8 @@ Vue.mixin({
 			let error_count = 0
 			let interval = 100
 
-			let loader = null
 			if (loading_overlay) {
-				loader = this.$loading.show()
+				this.$store.state.loader = this.$loading.show()
 			}
 			return new Promise((resolve, reject) => {
 				let loop = setInterval(() => {
@@ -68,15 +56,14 @@ Vue.mixin({
 						}).catch(e => {
 							reject(e)
 						}).finally(r => {
-							if (loader != null) {
-								loader.hide()
+							if (this.$store.state.loader != null) {
+								this.$store.state.loader.hide()
 							}
 						})
 					} else {
-						if (++error_count >= (5000 / interval)) {
+						if (++error_count >= (3000 / interval)) {
 							clearInterval(loop)
-							alert("予期しないエラーが発生しました。ログインし直してください")
-							this.$router.push("/logout")
+							this.$router.push("/")
 						}
 						params.token = this.$store.state.token
 					}
@@ -87,36 +74,10 @@ Vue.mixin({
 })
 
 router.beforeEach((to, from, next) => {
-	let skipAuth = to.matched.some(record => record.meta.skipAuth)
-	firebase.auth().onAuthStateChanged(function (user) {
-		if (user && !store.state.login) {
-			firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-				store.commit("login", token)
-			})
-		} else if (!user && store.state.login) {
-			store.commit("logout")
-		}
-		if (!skipAuth) {
-			if (!user) {
-				if (to.name !== "Logout") {
-					localStorage.setItem("redirect", to.name.toLowerCase())
-				}
-				next({
-					path: '/login'
-				})
-			} else {
-				next()
-			}
-		} else {
-			if (user) {
-				next({
-					path: `/${store.state.redirect_default}`
-				})
-			} else {
-				next()
-			}
-		}
-	})
+	if (store.state.loader != null) {
+		store.state.loader.hide()
+	}
+	next()
 })
 
 new Vue({
