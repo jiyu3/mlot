@@ -1,0 +1,9 @@
+{
+	"db": {
+		"host": "35.236.167.118",
+		"user": "greenlot",
+		"password": "baiwe7neika2zieS",
+		"database": "lot",
+		"port": 3306
+	}
+}
