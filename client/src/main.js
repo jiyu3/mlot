@@ -9,6 +9,7 @@ import store from './store'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+axios.defaults.timeout = 3000;
 Vue.use(VueAxios, axios)
 
 import Loading from 'vue-loading-overlay'

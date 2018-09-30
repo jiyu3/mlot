@@ -7,7 +7,7 @@
 	},
 	"production": {
 		"db": {
-			"base_url": "https://mylot.green:9999/"
+			"base_url": "https://mylot.green/db/"
 		},
 		"deposit_addr": "38LThaF8ohTk2Ji4H2MX5qfxT7QpiSN1oT"
 	}
