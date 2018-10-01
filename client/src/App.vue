@@ -76,7 +76,7 @@ export default {
 			let url = location.origin
 
 			if(type === "twitter") {
-				return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(description + "\n" + url + "\n" + " #glot #bitcoin #ビットコイン #仮想通貨 #比特幣 #虛擬貨幣")
+				return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(description + "\n" + url + "\n" + " #MLot #bitcoin #ビットコイン #仮想通貨 #比特幣 #虛擬貨幣")
 			} else if (type === "facebook") {
 				return "https://www.facebook.com/sharer/sharer.php?u=" + url + "&t=" + encodeURIComponent(description)
 			} else {

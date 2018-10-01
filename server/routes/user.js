@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 })
 
 /**
- * Save login user information into glot database server.
+ * Save login user information into mlot database server.
  * @param {string} [token] - firebase uid token
  * usage: POST http://lot.green/login/ { "jsonrpc": "2.0", "method": "login", "params": { "token": "somestring" } }
  */

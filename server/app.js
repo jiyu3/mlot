@@ -1,5 +1,5 @@
 process.env.PORT = 9999
-process.title = "glot-server"
+process.title = "mlot-server"
 
 let createError = require('http-errors')
 let express = require('express')

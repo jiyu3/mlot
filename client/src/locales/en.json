@@ -5,8 +5,8 @@
 		"result": "See Result"
 	},
 	"home": {
-		"description": "What is GLot",
-		"description_content": "GLot is the web app that you can buy lottery with bitcoin. The reduction rate is much higher than fiat-base one, so you may be able to get much more benefit.",
+		"description": "What is MLot",
+		"description_content": "MLot is the web app that you can buy lottery with bitcoin. The reduction rate is much higher than fiat-base one, so you may be able to get much more benefit.",
 		"usage": "Usage",
 		"usage_content": "Click \"Buy Lot\" button on header, go to lottery page, and pay bitcoin to designated address, then you finish to buy lottery. After the recruitment period of lottery, click \"See Result\" to see resutl.",
 		"lot_method": "Lottery method",

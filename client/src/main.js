@@ -1,5 +1,5 @@
 /* eslint-disable */
-process.title = "glot-client"
+process.title = "mlot-client"
 
 import Vue from 'vue'
 import App from './App.vue'
