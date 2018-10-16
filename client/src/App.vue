@@ -154,6 +154,24 @@ footer a:not(:first-child) {
 	margin-top: 60px;
 }
 
+/* Anker */
+
+a:link {
+	color: green;
+	font-weight: bold;
+}
+a:visited {
+	color: darkgreen;
+}
+a:hover {
+	color: green !important;
+}
+a:active {
+	color: green;
+}
+
+/* Header */
+
 header {
 	width: 100%;
 	position: fixed;
@@ -163,10 +181,7 @@ header {
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
-}
-
-header a:hover, header .router-link-exact-active {
-	background-color: white;
+	height: 45px;
 }
 
 header > div {
@@ -180,6 +195,7 @@ header > div {
 
 header a {
 	color:green;
+	font-weight: normal !important;
 }
 
 header a:hover {
